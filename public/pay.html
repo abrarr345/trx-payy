@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Cashier | SolidPay Gateway</title>
+  <meta name="description" content="Complete your UPI payment quickly and securely. Scan QR or pay directly with PhonePe, Google Pay, Paytm, or BHIM.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .pay-page-wrapper {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+    }
+    .pay-cashier-card {
+      position: relative;
+      background: var(--bg-card);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: var(--shadow-lg), 0 0 50px rgba(99, 102, 241, 0.2);
+      text-align: center;
+    }
+    .cashier-header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.25rem;
+    }
+    .cashier-merchant-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: #a5b4fc;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .cashier-amount-title {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .cashier-amount {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0.2rem 0;
+    }
+    .cashier-order-num {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent-cyan);
+    }
+    .timer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--accent-amber);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      margin-top: 0.75rem;
+    }
+
+    /* Cashier QR Section */
+    .cashier-qr-wrap {
+      background: #ffffff;
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      display: inline-block;
+      margin: 1.25rem 0 0.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    }
+    .cashier-qr-wrap img {
+      display: block;
+      width: 200px;
+      height: 200px;
+    }
+    .qr-instruction {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+    }
+
+    /* UPI Apps Buttons */
+    .upi-apps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-bottom: 1.5rem;
+    }
+    .upi-app-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.7rem 0.85rem;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .upi-app-btn:hover {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--accent-primary);
+      transform: translateY(-1px);
+    }
+
+    /* UPI Copy Box */
+    .upi-copy-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .upi-vpa-text {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #38bdf8;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .btn-copy-vpa {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem 0.7rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-copy-vpa:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    /* UTR Verification Section */
+    .utr-section {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      text-align: left;
+      margin-bottom: 1.25rem;
+    }
+    .utr-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.3rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .utr-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.65rem;
+    }
+    .utr-input-box {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .utr-input-box input {
+      flex: 1;
+      background: #090d16;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.85rem;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      outline: none;
+      letter-spacing: 0.08em;
+    }
+    .utr-input-box input:focus {
+      border-color: var(--border-focus);
+    }
+    .btn-utr-submit {
+      background: var(--accent-emerald);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0 1.1rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-utr-submit:hover {
+      background: #059669;
+    }
+
+    .gateway-link-alt {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .gateway-link-alt a {
+      color: var(--accent-cyan);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="/" style="text-decoration: none;">
+        <div class="brand">
+          <div class="brand-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L3 7V12C3 17.55 6.84 22.74 12 24C17.16 22.74 21 17.55 21 12V7L12 2Z" fill="url(#brandGrad)"/>
+              <path d="M9.5 12.5L11.5 14.5L15 10" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="brandGrad" x1="3" y1="2" x2="21" y2="24" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#6366F1"/>
+                  <stop offset="1" stop-color="#06B6D4"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">SolidPay</span>
+            <span class="brand-badge">Official Cashier</span>
+          </div>
+        </div>
+      </a>
+
+      <div class="header-status">
+        <span class="status-dot"></span>
+        <span class="status-text">SSL Encrypted Session</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Cashier Content -->
+  <main class="pay-page-wrapper">
+    <div class="pay-cashier-card">
+
+      <div class="cashier-header">
+        <div class="cashier-merchant-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+          Merchant #1035 (Solid Border)
+        </div>
+        <div class="cashier-amount-title">Total Amount to Pay</div>
+        <div class="cashier-amount" id="cashierAmount">₹0.00</div>
+        <div class="cashier-order-num">Order ID: <span id="cashierOrderNo">Loading...</span></div>
+        <div class="timer-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Expires in: <span id="countdownTimer">09:59</span>
+        </div>
+      </div>
+
+      <!-- QR Code Section -->
+      <div class="cashier-qr-wrap" id="qrWrap">
+        <img id="cashierQrImg" src="" alt="UPI Payment QR Code">
+      </div>
+      <p class="qr-instruction">Scan this QR code with <strong>GPay, PhonePe, Paytm, or BHIM</strong> to complete payment</p>
+
+      <!-- Quick UPI Deep Links -->
+      <div class="upi-apps-grid">
+        <a id="phonepeLink" href="#" class="upi-app-btn">
+          <span>PhonePe</span>
+        </a>
+        <a id="gpayLink" href="#" class="upi-app-btn">
+          <span>Google Pay</span>
+        </a>
+        <a id="paytmLink" href="#" class="upi-app-btn">
+          <span>Paytm</span>
+        </a>
+        <a id="genericUpiLink" href="#" class="upi-app-btn">
+          <span>Any UPI App</span>
+        </a>
+      </div>
+
+      <!-- UPI ID Copy -->
+      <div class="upi-copy-box">
+        <div class="upi-vpa-text" id="upiVpaText">UPI: loading...</div>
+        <button type="button" class="btn-copy-vpa" id="btnCopyVpa">Copy UPI</button>
+      </div>
+
+      <!-- UTR 12-Digit Submission -->
+      <div class="utr-section">
+        <div class="utr-label">
+          <span>Paid? Enter 12-Digit UTR Number</span>
+        </div>
+        <div class="utr-hint">Submit the 12-digit transaction/UTR reference from your banking app:</div>
+        <div class="utr-input-box">
+          <input type="text" id="utrInput" maxlength="12" placeholder="e.g. 429182749102">
+          <button type="button" class="btn-utr-submit" id="btnSubmitUtr">Confirm</button>
+        </div>
+      </div>
+
+      <div class="gateway-link-alt">
+        <span>Prefer original hosted page? </span>
+        <a id="originalDeskLink" href="#" target="_blank" rel="noopener noreferrer">Open desk.talkpayapp.com →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="pay.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "solid-border-payment-gateway",
+  "version": "1.0.0",
+  "description": "Payment Gateway web application with HMAC-SHA256 signature for Solid Border Spec",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "payment",
+    "gateway",
+    "hmac-sha256",
+    "solid-border",
+    "payin"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "qrcode": "^1.5.4"
+  }
+}

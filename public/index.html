@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Gateway</title>
+  <meta name="description" content="Enter amount and proceed directly to payment gateway.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+
+  <!-- Main Container -->
+  <main class="main-content">
+    <div class="checkout-wrapper single-column">
+      <div class="checkout-card">
+        <div class="card-glow"></div>
+
+        <div class="card-header text-center">
+          <h1 class="card-title">Make a Payment</h1>
+          <p class="card-subtitle">Enter amount and click below to redirect to the payment gateway</p>
+        </div>
+
+        <!-- Checkout Form -->
+        <form class="payment-form" id="paymentForm" onsubmit="return false;">
+
+          <!-- Amount Input Section -->
+          <div class="amount-group">
+            <label for="amountInput" class="field-label">
+              <span>Amount to Pay</span>
+              <span class="currency-label">INR (₹)</span>
+            </label>
+
+            <div class="amount-input-box">
+              <span class="currency-symbol">₹</span>
+              <input 
+                type="number" 
+                id="amountInput" 
+                name="amount" 
+                value="100" 
+                min="100" 
+                max="50000" 
+                step="1" 
+                placeholder="100"
+                required
+                autocomplete="off"
+              >
+            </div>
+            <div class="limits-hint" id="limitsHint">Limits: ₹100.00 – ₹50,000.00</div>
+          </div>
+
+          <!-- Preset Amount Buttons -->
+          <div class="presets-container">
+            <div class="preset-chips">
+              <button type="button" class="preset-chip active" data-amount="100">₹100</button>
+              <button type="button" class="preset-chip" data-amount="500">₹500</button>
+              <button type="button" class="preset-chip" data-amount="1000">₹1,000</button>
+              <button type="button" class="preset-chip" data-amount="2000">₹2,000</button>
+              <button type="button" class="preset-chip" data-amount="5000">₹5,000</button>
+              <button type="button" class="preset-chip" data-amount="10000">₹10,000</button>
+            </div>
+          </div>
+
+          <!-- Total Summary Line -->
+          <div class="simple-summary-line">
+            <span>Total Payable:</span>
+            <span class="total-amount-display" id="totalDisplay">₹100.00</span>
+          </div>
+
+          <!-- Submit CTA Button -->
+          <button type="button" class="submit-pay-btn" id="payButton">
+            <span class="btn-text" id="btnText">Pay Now →</span>
+            <div class="spinner" id="btnSpinner"></div>
+          </button>
+
+          <!-- Security Assurance Footer -->
+          <div class="security-footer simple">
+            <div class="security-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              <span>HMAC-SHA256 Encrypted</span>
+            </div>
+            <div class="security-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+              <span>Instant UPI & NetBanking</span>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

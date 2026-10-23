@@ -1,0 +1,412 @@
+/* ===================================================================
+   SolidPay Payment Gateway Design System
+   Mobile Responsive, Non-Scrollable, Compact Dark Fintech Aesthetic
+   =================================================================== */
+
+:root {
+  --bg-primary: #090d16;
+  --bg-secondary: #0f172a;
+  --bg-card: rgba(17, 24, 39, 0.92);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-focus: #6366f1;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --accent-primary: #6366f1;
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+  --accent-rose: #f43f5e;
+
+  --gradient-brand: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+  --shadow-lg: 0 16px 30px -5px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 35px -8px rgba(99, 102, 241, 0.3);
+
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Strictly prevent scrolling */
+  background-color: var(--bg-primary);
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient glow effects */
+.ambient-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-1 {
+  width: 320px;
+  height: 320px;
+  background: rgba(99, 102, 241, 0.18);
+  top: -60px;
+  left: 15%;
+}
+.glow-2 {
+  width: 320px;
+  height: 320px;
+  background: rgba(6, 182, 212, 0.14);
+  bottom: -40px;
+  right: 15%;
+}
+
+/* Main Container - Exact 100dvh Centered, No Scroll */
+.main-content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+}
+
+/* Centered Checkout Card */
+.checkout-wrapper.single-column {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  justify-content: center;
+}
+
+.checkout-card {
+  position: relative;
+  background: var(--bg-card);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem 1.25rem 1.15rem;
+  width: 100%;
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  overflow: hidden;
+}
+
+.card-glow {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.card-header {
+  margin-bottom: 0.85rem;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+}
+
+.card-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+/* Payment Form */
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Amount Input Group */
+.amount-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.field-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.currency-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+
+.amount-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.45rem 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.amount-input-box:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.currency-symbol {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-right: 0.5rem;
+  user-select: none;
+}
+
+.amount-input-box input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.limits-hint {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+/* Preset Chips - 3 columns, 2 clean rows */
+.presets-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.preset-chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+}
+
+.preset-chip {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.78rem;
+  padding: 0.42rem 0.2rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.preset-chip:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  color: var(--text-primary);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.preset-chip.active {
+  background: rgba(99, 102, 241, 0.22);
+  border-color: var(--accent-primary);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+}
+
+/* Simple Summary Line */
+.simple-summary-line {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.total-amount-display {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--accent-emerald);
+}
+
+/* Submit CTA Button */
+.submit-pay-btn {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-brand);
+  color: #ffffff;
+  border: none;
+  outline: none;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+}
+
+.submit-pay-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+}
+
+.submit-pay-btn:active {
+  transform: translateY(0);
+}
+
+.submit-pay-btn.loading .btn-text {
+  visibility: hidden;
+}
+
+.spinner {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  position: absolute;
+}
+
+.submit-pay-btn.loading .spinner {
+  display: block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Security Footer */
+.security-footer.simple {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.security-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.security-item svg {
+  color: var(--accent-emerald);
+  width: 12px;
+  height: 12px;
+}
+
+/* Toast Notification */
+.toast-container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  left: 1rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  pointer-events: none;
+}
+
+.toast {
+  background: rgba(17, 24, 39, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1rem;
+  box-shadow: var(--shadow-lg);
+  font-size: 0.78rem;
+  color: #fff;
+  animation: slideInUp 0.25s ease-out;
+  pointer-events: auto;
+}
+
+.toast.success { border-color: rgba(16, 185, 129, 0.4); }
+.toast.error { border-color: rgba(244, 63, 94, 0.4); }
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Extra Small Heights (e.g. landscape phone or small screen) */
+@media (max-height: 580px) {
+  .checkout-card {
+    padding: 0.85rem 1rem;
+  }
+  .card-header {
+    margin-bottom: 0.45rem;
+  }
+  .payment-form {
+    gap: 0.5rem;
+  }
+  .amount-input-box {
+    padding: 0.35rem 0.65rem;
+  }
+  .preset-chip {
+    padding: 0.3rem 0.15rem;
+    font-size: 0.72rem;
+  }
+  .submit-pay-btn {
+    padding: 0.6rem 0.85rem;
+  }
+  .security-footer.simple {
+    padding-top: 0.4rem;
+  }
+}
